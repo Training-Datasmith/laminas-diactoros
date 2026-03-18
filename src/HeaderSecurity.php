@@ -59,17 +59,18 @@ final class HeaderSecurity
 
                 continue;
             }
-
             // Non-visible, non-whitespace characters
             // 9 === horizontal tab
             // 32-126, 128-254 === visible
             // 127 === DEL
             // 255 === null byte
-            if (
-                ($ascii < 32 && $ascii !== 9)
-                || $ascii === 127
-                || $ascii > 254
-            ) {
+            if ($ascii < 32 && $ascii !== 9) {
+                continue;
+            }
+            if ($ascii === 127) {
+                continue;
+            }
+            if ($ascii > 254) {
                 continue;
             }
 

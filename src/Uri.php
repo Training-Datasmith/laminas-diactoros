@@ -523,7 +523,7 @@ class Uri implements UriInterface, Stringable
          */
         $result = preg_replace_callback(
             '/(?:[^%' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . ']+|%(?![A-Fa-f0-9]{2}))/u',
-            [$this, 'urlEncodeChar'],
+            $this->urlEncodeChar(...),
             $part
         );
         assert($result !== null, 'Always true condition for psalm type safety');
@@ -539,7 +539,7 @@ class Uri implements UriInterface, Stringable
 
         $result = preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . ')(:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/u',
-            [$this, 'urlEncodeChar'],
+            $this->urlEncodeChar(...),
             $path
         );
         assert($result !== null, 'Always true condition for psalm type safety');
@@ -629,7 +629,7 @@ class Uri implements UriInterface, Stringable
 
         $result = preg_replace_callback(
             '/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/u',
-            [$this, 'urlEncodeChar'],
+            $this->urlEncodeChar(...),
             $value
         );
         assert($result !== null, 'Always true condition for psalm type safety');

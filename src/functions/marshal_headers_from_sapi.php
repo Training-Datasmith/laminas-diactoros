@@ -33,10 +33,12 @@ function marshalHeadersFromSapi(array $server): array
 
     $headers = [];
     foreach ($server as $key => $value) {
-        if (! is_string($key) || $key === '') {
+        if (! is_string($key)) {
             continue;
         }
-
+        if ($key === '') {
+            continue;
+        }
         if ($value === '') {
             continue;
         }
@@ -70,5 +72,5 @@ function marshalHeadersFromSapi(array $server): array
     // These can occur if the translated header name is a string integer.
     // PHP will cast those to integers when assigned to an array.
     // This filters them out.
-    return array_filter($headers, fn(string|int $key): bool => is_string($key), ARRAY_FILTER_USE_KEY);
+    return array_filter($headers, is_string(...), ARRAY_FILTER_USE_KEY);
 }

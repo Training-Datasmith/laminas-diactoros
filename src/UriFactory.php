@@ -163,7 +163,7 @@ class UriFactory implements UriFactoryInterface
      */
     private static function marshalIpv6HostAndPort(array $server, ?int $port): array
     {
-        $host             = '[' . (string) $server['SERVER_ADDR'] . ']';
+        $host             = '[' . $server['SERVER_ADDR'] . ']';
         $port           ??= 80;
         $portSeparatorPos = strrpos($host, ':');
 

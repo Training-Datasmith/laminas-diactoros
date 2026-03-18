@@ -32,7 +32,7 @@ use const FILTER_VALIDATE_IP;
  * in order to return a new request that composes a URI instance that reflects
  * those headers.
  */
-final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
+final readonly class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
 {
     public const HEADER_HOST  = 'X-FORWARDED-HOST';
     public const HEADER_PORT  = 'X-FORWARDED-PORT';
@@ -51,8 +51,8 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
      * @param list<FilterUsingXForwardedHeaders::HEADER_*> $trustedHeaders
      */
     private function __construct(
-        private readonly array $trustedProxies = [],
-        private readonly array $trustedHeaders = []
+        private array $trustedProxies = [],
+        private array $trustedHeaders = []
     ) {
     }
 
@@ -75,7 +75,11 @@ final class FilterUsingXForwardedHeaders implements FilterServerRequestInterface
         $uri = $originalUri = $request->getUri();
         foreach ($this->trustedHeaders as $headerName) {
             $header = $request->getHeaderLine($headerName);
-            if ('' === $header || str_contains($header, ',')) {
+            if ('' === $header) {
+                // Reject empty headers and/or headers with multiple values
+                continue;
+            }
+            if (str_contains($header, ',')) {
                 // Reject empty headers and/or headers with multiple values
                 continue;
             }

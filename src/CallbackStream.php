@@ -48,8 +48,6 @@ class CallbackStream implements StreamInterface, Stringable
 
     /**
      * {@inheritdoc}
-     *
-     * @return null|callable
      */
     #[Override]
     public function detach(): ?callable
@@ -171,7 +169,7 @@ class CallbackStream implements StreamInterface, Stringable
      * {@inheritdoc}
      */
     #[Override]
-    public function getMetadata(?string $key = null)
+    public function getMetadata(?string $key = null): array|null|bool|string
     {
         $metadata = [
             'eof'         => $this->eof(),

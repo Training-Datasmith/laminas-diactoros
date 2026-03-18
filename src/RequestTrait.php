@@ -128,7 +128,7 @@ trait RequestTrait
         }
 
         if (empty($target)) {
-            $target = '/';
+            return '/';
         }
 
         return $target;
@@ -262,7 +262,7 @@ trait RequestTrait
         // de-normalization of the header name.
         // @see https://github.com/zendframework/zend-diactoros/issues/91
         foreach (array_keys($new->headers) as $header) {
-            if (strtolower($header) === 'host') {
+            if (strtolower((string) $header) === 'host') {
                 unset($new->headers[$header]);
             }
         }

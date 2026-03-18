@@ -16,11 +16,11 @@ use const SEEK_SET;
  *
  * @see AbstractSerializer::splitStream()
  */
-final class RelativeStream implements StreamInterface, Stringable
+final readonly class RelativeStream implements StreamInterface, Stringable
 {
-    private readonly int $offset;
+    private int $offset;
 
-    public function __construct(private readonly StreamInterface $decoratedStream, ?int $offset)
+    public function __construct(private StreamInterface $decoratedStream, ?int $offset)
     {
         $this->offset = (int) $offset;
     }

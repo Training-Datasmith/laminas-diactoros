@@ -23,7 +23,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      *
      * @var callable|string
      */
-    private static $apacheRequestHeaders = 'apache_request_headers';
+    private static string $apacheRequestHeaders = 'apache_request_headers';
 
     /**
      * Create a request from the supplied superglobal values.
