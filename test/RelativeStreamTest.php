@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use function fopen;
+
 use Laminas\Diactoros\RelativeStream;
 use Laminas\Diactoros\Stream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 
-use function fopen;
+use RuntimeException;
 
 use const SEEK_SET;
 
@@ -115,7 +116,7 @@ final class RelativeStreamTest extends TestCase
         $decorated->method('tell')->willReturn(100);
         $decorated->expects(self::once())->method('write')->with('foobaz')->willReturn(6);
         $stream = new RelativeStream($decorated, 100);
-        $ret    = $stream->write("foobaz");
+        $ret    = $stream->write('foobaz');
         $this->assertSame(6, $ret);
     }
 
@@ -126,7 +127,7 @@ final class RelativeStreamTest extends TestCase
         $decorated->expects(self::once())->method('read')->with(3)->willReturn('foo');
         $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->read(3);
-        $this->assertSame("foo", $ret);
+        $this->assertSame('foo', $ret);
     }
 
     public function testGetContents(): void
@@ -136,7 +137,7 @@ final class RelativeStreamTest extends TestCase
         $decorated->expects(self::once())->method('getContents')->willReturn('foo');
         $stream = new RelativeStream($decorated, 100);
         $ret    = $stream->getContents();
-        $this->assertSame("foo", $ret);
+        $this->assertSame('foo', $ret);
     }
 
     public function testGetMetadata(): void
@@ -144,8 +145,8 @@ final class RelativeStreamTest extends TestCase
         $decorated = $this->createMock(Stream::class);
         $decorated->expects(self::once())->method('getMetadata')->with('bar')->willReturn('foo');
         $stream = new RelativeStream($decorated, 100);
-        $ret    = $stream->getMetadata("bar");
-        $this->assertSame("foo", $ret);
+        $ret    = $stream->getMetadata('bar');
+        $this->assertSame('foo', $ret);
     }
 
     public function testWriteRaisesExceptionWhenPointerIsBehindOffset(): void
@@ -158,7 +159,7 @@ final class RelativeStreamTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid pointer position');
 
-        $stream->write("foobaz");
+        $stream->write('foobaz');
     }
 
     public function testReadRaisesExceptionWhenPointerIsBehindOffset(): void

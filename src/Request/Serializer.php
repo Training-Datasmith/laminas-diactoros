@@ -9,10 +9,13 @@ use Laminas\Diactoros\Exception;
 use Laminas\Diactoros\Request;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\Uri;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
 
 use function preg_match;
+
+use Psr\Http\Message\RequestInterface;
+
+use Psr\Http\Message\StreamInterface;
+
 use function sprintf;
 
 /**

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\Response;
 
+use function get_debug_type;
+use function is_string;
+
 use Laminas\Diactoros\Exception;
+
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\UriInterface;
 
-use function get_debug_type;
-use function is_string;
 use function sprintf;
 
 /**

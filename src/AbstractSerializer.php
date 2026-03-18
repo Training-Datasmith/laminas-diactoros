@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use Psr\Http\Message\StreamInterface;
-
 use function array_pop;
+
 use function assert;
 use function implode;
 use function is_string;
 use function preg_match;
+
+use Psr\Http\Message\StreamInterface;
+
 use function sprintf;
 use function str_replace;
 use function trim;

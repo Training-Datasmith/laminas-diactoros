@@ -4,8 +4,19 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use function assert;
+use function basename;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function fopen;
+
 use InvalidArgumentException;
+
+use function is_string;
+
 use Laminas\Diactoros\Stream;
+
 use Laminas\Diactoros\UploadedFile;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -14,13 +25,6 @@ use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use RuntimeException;
 
-use function assert;
-use function basename;
-use function file_exists;
-use function file_get_contents;
-use function file_put_contents;
-use function fopen;
-use function is_string;
 use function sys_get_temp_dir;
 use function tempnam;
 use function uniqid;

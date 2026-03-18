@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use function is_array;
+
 use Psr\Http\Message\UploadedFileInterface;
 
-use function is_array;
 use function sprintf;
 
 /**

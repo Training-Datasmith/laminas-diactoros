@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace LaminasTest\Diactoros\Request;
 
 use InvalidArgumentException;
+
+use function json_encode;
+
+use const JSON_THROW_ON_ERROR;
+
 use Laminas\Diactoros\RelativeStream;
 use Laminas\Diactoros\Request;
 use Laminas\Diactoros\Request\Serializer;
@@ -13,13 +18,12 @@ use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
-use UnexpectedValueException;
 
-use function json_encode;
+use Psr\Http\Message\StreamInterface;
+
 use function strlen;
 
-use const JSON_THROW_ON_ERROR;
+use UnexpectedValueException;
 
 final class SerializerTest extends TestCase
 {
@@ -64,8 +68,8 @@ final class SerializerTest extends TestCase
             ->withAddedHeader('X-Foo-Bar', 'Bat');
 
         $message = Serializer::toString($request);
-        $this->assertStringContainsString("X-Foo-Bar: Baz", $message);
-        $this->assertStringContainsString("X-Foo-Bar: Bat", $message);
+        $this->assertStringContainsString('X-Foo-Bar: Baz', $message);
+        $this->assertStringContainsString('X-Foo-Bar: Bat', $message);
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string, non-empty-string, array<non-empty-string, non-empty-string>}> */
@@ -375,7 +379,7 @@ final class SerializerTest extends TestCase
     public function testFromStreamStopsReadingAfterScanningHeader(): void
     {
         $headers = "POST /foo HTTP/1.0\r\nContent-Type: text/plain\r\nX-Foo-Bar: Baz;\r\n Bat\r\n\r\n";
-        $payload = $headers . "Content!";
+        $payload = $headers . 'Content!';
 
         $stream = $this->createMock(StreamInterface::class);
         $stream

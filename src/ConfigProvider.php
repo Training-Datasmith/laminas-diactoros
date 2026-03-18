@@ -43,7 +43,7 @@ class ConfigProvider
                 StreamFactoryInterface::class => StreamFactory::class,
                 ServerRequestFactoryInterface::class => ServerRequestFactory::class,
                 UploadedFileFactoryInterface::class => UploadedFileFactory::class,
-                UriFactoryInterface::class => UriFactory::class
+                UriFactoryInterface::class => UriFactory::class,
             ],
         ];
         // @codingStandardsIgnoreEnd

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\Exception;
 
-use UnexpectedValueException;
-
 use function sprintf;
+
+use UnexpectedValueException;
 
 class UnrecognizedProtocolVersionException extends UnexpectedValueException implements ExceptionInterface
 {

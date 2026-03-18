@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros\functions;
 
-use PHPUnit\Framework\TestCase;
-
 use function Laminas\Diactoros\marshalHeadersFromSapi;
+
+use PHPUnit\Framework\TestCase;
 
 final class MarshalHeadersFromSapiTest extends TestCase
 {

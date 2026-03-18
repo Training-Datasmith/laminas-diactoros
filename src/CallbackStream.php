@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use Override;
-use Psr\Http\Message\StreamInterface;
-use Stringable;
-
 use function array_key_exists;
 
+use Override;
+use Psr\Http\Message\StreamInterface;
+
 use const SEEK_SET;
+
+use Stringable;
 
 /**
  * Implementation of PSR HTTP streams

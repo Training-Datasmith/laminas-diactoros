@@ -104,9 +104,9 @@ final class RequestTest extends TestCase
     public function testDefaultStreamIsWritable(): void
     {
         $request = new Request();
-        $request->getBody()->write("test");
+        $request->getBody()->write('test');
 
-        $this->assertSame("test", (string) $request->getBody());
+        $this->assertSame('test', (string) $request->getBody());
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */

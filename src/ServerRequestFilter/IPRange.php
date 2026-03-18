@@ -63,8 +63,8 @@ final class IPRange
         }
 
         return 0 === substr_compare(
-            sprintf("%032b", $ip),
-            sprintf("%032b", $subnet),
+            sprintf('%032b', $ip),
+            sprintf('%032b', $subnet),
             0,
             $mask
         );
@@ -101,23 +101,23 @@ final class IPRange
         }
 
         // @see http://stackoverflow.com/questions/7951061/matching-ipv6-address-to-a-cidr-subnet, MW answer
-        $binMask = str_repeat("f", intval($mask / 4));
+        $binMask = str_repeat('f', intval($mask / 4));
         switch ($mask % 4) {
             case 0:
                 break;
             case 1:
-                $binMask .= "8";
+                $binMask .= '8';
                 break;
             case 2:
-                $binMask .= "c";
+                $binMask .= 'c';
                 break;
             case 3:
-                $binMask .= "e";
+                $binMask .= 'e';
                 break;
         }
 
         $binMask = str_pad($binMask, 32, '0');
-        $binMask = pack("H*", $binMask);
+        $binMask = pack('H*', $binMask);
 
         return ($ip & $binMask) === $subnet;
     }

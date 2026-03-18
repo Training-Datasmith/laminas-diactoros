@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Laminas\Diactoros;
 
 use function preg_match_all;
-use function rawurldecode;
 
 use const PREG_SET_ORDER;
+
+use function rawurldecode;
 
 /**
  * Parse a cookie header according to RFC 6265.

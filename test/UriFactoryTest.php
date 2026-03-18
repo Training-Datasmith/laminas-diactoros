@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use function array_shift;
+
 use Laminas\Diactoros\Uri;
 use Laminas\Diactoros\UriFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
+
 use PHPUnit\Framework\TestCase;
 
-use function array_shift;
 use function sprintf;
 use function str_contains;
 use function strtolower;

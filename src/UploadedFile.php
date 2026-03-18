@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use Override;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UploadedFileInterface;
-
 use function assert;
 use function dirname;
 use function fclose;
+
 use function file_exists;
 use function fopen;
 use function fwrite;
@@ -19,10 +16,18 @@ use function is_resource;
 use function is_string;
 use function is_writable;
 use function move_uploaded_file;
-use function str_starts_with;
-use function unlink;
+
+use Override;
 
 use const PHP_SAPI;
+
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UploadedFileInterface;
+
+use function str_starts_with;
+
+use function unlink;
+
 use const UPLOAD_ERR_CANT_WRITE;
 use const UPLOAD_ERR_EXTENSION;
 use const UPLOAD_ERR_FORM_SIZE;

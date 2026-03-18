@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use function assert;
+use function fopen;
+use function fwrite;
+
+use function is_resource;
+
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
-use function assert;
-use function fopen;
-use function fwrite;
-use function is_resource;
 use function rewind;
 
 class StreamFactory implements StreamFactoryInterface

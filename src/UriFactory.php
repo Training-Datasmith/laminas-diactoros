@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use Override;
-use Psr\Http\Message\UriFactoryInterface;
-use Psr\Http\Message\UriInterface;
-
 use function array_change_key_case;
 use function array_key_exists;
 use function assert;
+
+use const CASE_LOWER;
+
 use function count;
 use function explode;
 use function gettype;
@@ -19,16 +18,22 @@ use function is_bool;
 use function is_scalar;
 use function is_string;
 use function ltrim;
+
+use Override;
+
 use function preg_match;
 use function preg_replace;
+
+use Psr\Http\Message\UriFactoryInterface;
+use Psr\Http\Message\UriInterface;
+
 use function sprintf;
 use function str_contains;
 use function strlen;
 use function strrpos;
 use function strtolower;
-use function substr;
 
-use const CASE_LOWER;
+use function substr;
 
 class UriFactory implements UriFactoryInterface
 {

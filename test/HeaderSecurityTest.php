@@ -20,18 +20,18 @@ final class HeaderSecurityTest extends TestCase
     public static function getFilterValues(): array
     {
         return [
-            ["This is a\n test", "This is a test"],
-            ["This is a\r test", "This is a test"],
-            ["This is a\n\r test", "This is a test"],
+            ["This is a\n test", 'This is a test'],
+            ["This is a\r test", 'This is a test'],
+            ["This is a\n\r test", 'This is a test'],
             ["This is a\r\n  test", "This is a\r\n  test"],
-            ["This is a \r\ntest", "This is a test"],
-            ["This is a \r\n\n test", "This is a  test"],
-            ["This is a\n\n test", "This is a test"],
-            ["This is a\r\r test", "This is a test"],
+            ["This is a \r\ntest", 'This is a test'],
+            ["This is a \r\n\n test", 'This is a  test'],
+            ["This is a\n\n test", 'This is a test'],
+            ["This is a\r\r test", 'This is a test'],
             ["This is a \r\r\n test", "This is a \r\n test"],
-            ["This is a \r\n\r\ntest", "This is a test"],
+            ["This is a \r\n\r\ntest", 'This is a test'],
             ["This is a \r\n\n\r\n test", "This is a \r\n test"],
-            ["This is a test\n", "This is a test"],
+            ["This is a test\n", 'This is a test'],
         ];
     }
 
@@ -116,9 +116,9 @@ final class HeaderSecurityTest extends TestCase
             ["\ntest"],
             ["foo\r\n bar"],
             ["f\x00o"],
-            ["foo bar"],
-            [":foo"],
-            ["foo:"],
+            ['foo bar'],
+            [':foo'],
+            ['foo:'],
         ];
     }
 

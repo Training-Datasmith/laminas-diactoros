@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use function Laminas\Diactoros\marshalHeadersFromSapi;
+use function Laminas\Diactoros\marshalProtocolVersionFromSapi;
+use function Laminas\Diactoros\normalizeServer;
+use function Laminas\Diactoros\normalizeUploadedFiles;
+
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\Diactoros\ServerRequestFilter\DoNotFilter;
@@ -12,16 +17,14 @@ use Laminas\Diactoros\UploadedFile;
 use Override;
 use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\Attributes\DataProvider;
+
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
-use UnexpectedValueException;
 
-use function Laminas\Diactoros\marshalHeadersFromSapi;
-use function Laminas\Diactoros\marshalProtocolVersionFromSapi;
-use function Laminas\Diactoros\normalizeServer;
-use function Laminas\Diactoros\normalizeUploadedFiles;
 use function str_replace;
+
+use UnexpectedValueException;
 
 #[BackupGlobals(true)]
 final class ServerRequestFactoryTest extends TestCase
@@ -269,7 +272,7 @@ final class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesMixedCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
-        $server = normalizeServer([], static fn(): array => ['Authorization' => 'foobar']);
+        $server = normalizeServer([], static fn (): array => ['Authorization' => 'foobar']);
 
         $this->assertArrayHasKey('HTTP_AUTHORIZATION', $server);
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
@@ -277,7 +280,7 @@ final class ServerRequestFactoryTest extends TestCase
 
     public function testNormalizeServerUsesLowerCaseAuthorizationHeaderFromApacheWhenPresent(): void
     {
-        $server = normalizeServer([], static fn(): array => ['authorization' => 'foobar']);
+        $server = normalizeServer([], static fn (): array => ['authorization' => 'foobar']);
 
         $this->assertArrayHasKey('HTTP_AUTHORIZATION', $server);
         $this->assertSame('foobar', $server['HTTP_AUTHORIZATION']);
@@ -287,7 +290,7 @@ final class ServerRequestFactoryTest extends TestCase
     {
         $expected = ['FOO_BAR' => 'BAZ'];
 
-        $server = normalizeServer($expected, static fn(): array => []);
+        $server = normalizeServer($expected, static fn (): array => []);
 
         $this->assertSame($expected, $server);
     }

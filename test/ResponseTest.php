@@ -4,39 +4,47 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
-use DOMDocument;
-use DOMNode;
-use DOMXPath;
-use InvalidArgumentException;
-use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Stream;
-use Override;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\TestCase;
-
 use function assert;
 use function curl_exec;
 use function curl_getinfo;
 use function curl_init;
 use function curl_setopt;
-use function file_exists;
-use function file_put_contents;
-use function getenv;
-use function gmdate;
-use function in_array;
-use function is_int;
-use function is_string;
-use function preg_match;
-use function sprintf;
-use function strtotime;
 
 use const CURLINFO_HTTP_CODE;
 use const CURLOPT_HTTPHEADER;
 use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_TIMEOUT;
 use const CURLOPT_USERAGENT;
+
+use DOMDocument;
+use DOMNode;
+use DOMXPath;
+
+use function file_exists;
+use function file_put_contents;
+use function getenv;
+use function gmdate;
+use function in_array;
+
+use InvalidArgumentException;
+
+use function is_int;
+use function is_string;
+
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Stream;
+
 use const LOCK_EX;
+
+use Override;
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\TestCase;
+
+use function preg_match;
+use function sprintf;
+use function strtotime;
 
 final class ResponseTest extends TestCase
 {

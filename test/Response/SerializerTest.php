@@ -52,8 +52,8 @@ final class SerializerTest extends TestCase
             ->withAddedHeader('X-Foo-Bar', 'Bat');
 
         $message = Serializer::toString($response);
-        $this->assertStringContainsString("X-Foo-Bar: Baz", $message);
-        $this->assertStringContainsString("X-Foo-Bar: Bat", $message);
+        $this->assertStringContainsString('X-Foo-Bar: Baz', $message);
+        $this->assertStringContainsString('X-Foo-Bar: Bat', $message);
     }
 
     public function testOmitsReasonPhraseFromStatusLineIfEmpty(): void
@@ -164,7 +164,7 @@ final class SerializerTest extends TestCase
 
     public function testCanDeserializeResponseWithoutHeadersOrBody(): void
     {
-        $text     = "HTTP/1.0 204";
+        $text     = 'HTTP/1.0 204';
         $response = Serializer::fromString($text);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);

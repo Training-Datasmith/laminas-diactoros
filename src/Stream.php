@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use Override;
-use Psr\Http\Message\StreamInterface;
-use RuntimeException;
-use Stringable;
-use Throwable;
-
 use function array_key_exists;
 use function assert;
 use function fclose;
 use function feof;
 use function fopen;
+
 use function fread;
 use function fseek;
 use function fstat;
@@ -25,12 +20,21 @@ use function in_array;
 use function is_int;
 use function is_resource;
 use function is_string;
+
+use Override;
+use Psr\Http\Message\StreamInterface;
+use RuntimeException;
+
+use const SEEK_SET;
+
 use function sprintf;
 use function str_contains;
 use function stream_get_contents;
 use function stream_get_meta_data;
 
-use const SEEK_SET;
+use Stringable;
+
+use Throwable;
 
 /**
  * Implementation of PSR HTTP streams

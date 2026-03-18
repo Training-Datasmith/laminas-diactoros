@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
-use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\UploadedFileInterface;
-
 use function Laminas\Diactoros\normalizeUploadedFiles;
+
+use PHPUnit\Framework\TestCase;
+
+use Psr\Http\Message\UploadedFileInterface;
 
 final class NormalizeUploadedFilesTest extends TestCase
 {

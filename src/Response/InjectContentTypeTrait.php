@@ -20,7 +20,7 @@ trait InjectContentTypeTrait
     {
         $hasContentType = array_reduce(
             array_keys($headers),
-            static fn(bool $carry, string $item): bool => $carry ?: strtolower($item) === 'content-type',
+            static fn (bool $carry, string $item): bool => $carry ?: strtolower($item) === 'content-type',
             false
         );
 

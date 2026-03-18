@@ -8,9 +8,10 @@ use Laminas\Diactoros\Exception;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
 
 use function sprintf;
+
+use Throwable;
 
 /**
  * Serialize or deserialize response messages to/from arrays.

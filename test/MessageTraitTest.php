@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use function count;
+
 use InvalidArgumentException;
 use Laminas\Diactoros\Request;
 use Override;
@@ -11,9 +13,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\MessageInterface;
+
 use Psr\Http\Message\StreamInterface;
 
-use function count;
 use function trim;
 
 final class MessageTraitTest extends TestCase
@@ -307,23 +309,23 @@ final class MessageTraitTest extends TestCase
     public function testWithHeaderAllowsHeaderContinuations(): void
     {
         $message = $this->message->withHeader('X-Foo-Bar', "value,\r\n second value");
-        $this->assertSame("value, second value", $message->getHeaderLine('X-Foo-Bar'));
+        $this->assertSame('value, second value', $message->getHeaderLine('X-Foo-Bar'));
     }
 
     public function testWithAddedHeaderAllowsHeaderContinuations(): void
     {
         $message = $this->message->withAddedHeader('X-Foo-Bar', "value,\r\n second value");
-        $this->assertSame("value, second value", $message->getHeaderLine('X-Foo-Bar'));
+        $this->assertSame('value, second value', $message->getHeaderLine('X-Foo-Bar'));
     }
 
     /** @return non-empty-array<non-empty-string, array{non-empty-string}> */
     public static function headersWithWhitespace(): array
     {
         return [
-            'no'       => ["Baz"],
-            'leading'  => [" Baz"],
-            'trailing' => ["Baz "],
-            'both'     => [" Baz "],
+            'no'       => ['Baz'],
+            'leading'  => [' Baz'],
+            'trailing' => ['Baz '],
+            'both'     => [' Baz '],
             'mixed'    => [" \t Baz\t \t"],
         ];
     }

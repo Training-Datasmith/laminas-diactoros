@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\Response;
 
+use function is_object;
+use function is_resource;
+use function json_encode;
+
+use const JSON_HEX_AMP;
+
+use const JSON_HEX_APOS;
+use const JSON_HEX_QUOT;
+use const JSON_HEX_TAG;
+use const JSON_THROW_ON_ERROR;
+
+use const JSON_UNESCAPED_SLASHES;
+
 use JsonException;
 use Laminas\Diactoros\Exception;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Stream;
 
-use function is_object;
-use function is_resource;
-use function json_encode;
 use function sprintf;
-
-use const JSON_HEX_AMP;
-use const JSON_HEX_APOS;
-use const JSON_HEX_QUOT;
-use const JSON_HEX_TAG;
-use const JSON_THROW_ON_ERROR;
-use const JSON_UNESCAPED_SLASHES;
 
 /**
  * JSON response.

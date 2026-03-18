@@ -6,12 +6,14 @@ namespace LaminasTest\Diactoros\Response;
 
 use InvalidArgumentException;
 use Laminas\Diactoros\Response\XmlResponse;
+
+use const PHP_EOL;
+
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamInterface;
 
-use const PHP_EOL;
+use Psr\Http\Message\StreamInterface;
 
 final class XmlResponseTest extends TestCase
 {

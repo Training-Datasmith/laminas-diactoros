@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use function array_key_exists;
+use function is_callable;
+
 use Laminas\Diactoros\ServerRequestFilter\FilterServerRequestInterface;
 use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 use Override;
+
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
-use function array_key_exists;
-use function is_callable;
 
 /**
  * Class for marshaling a request object from the current PHP environment.

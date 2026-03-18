@@ -8,10 +8,13 @@ use Laminas\Diactoros\AbstractSerializer;
 use Laminas\Diactoros\Exception;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Stream;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 use function preg_match;
+
+use Psr\Http\Message\ResponseInterface;
+
+use Psr\Http\Message\StreamInterface;
+
 use function sprintf;
 
 final class Serializer extends AbstractSerializer

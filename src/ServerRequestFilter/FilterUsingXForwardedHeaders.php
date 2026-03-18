@@ -4,25 +4,29 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\ServerRequestFilter;
 
-use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
-use Laminas\Diactoros\Exception\InvalidProxyAddressException;
-use Laminas\Diactoros\UriFactory;
-use Override;
-use Psr\Http\Message\ServerRequestInterface;
-
 use function array_values;
 use function assert;
 use function count;
 use function explode;
+
+use const FILTER_FLAG_IPV4;
+
+use const FILTER_FLAG_IPV6;
+use const FILTER_VALIDATE_IP;
+
 use function filter_var;
 use function in_array;
 use function is_string;
+
+use Laminas\Diactoros\Exception\InvalidForwardedHeaderNameException;
+use Laminas\Diactoros\Exception\InvalidProxyAddressException;
+use Laminas\Diactoros\UriFactory;
+use Override;
+
+use Psr\Http\Message\ServerRequestInterface;
+
 use function str_contains;
 use function strtolower;
-
-use const FILTER_FLAG_IPV4;
-use const FILTER_FLAG_IPV6;
-use const FILTER_VALIDATE_IP;
 
 /**
  * Modify the URI to reflect the X-Forwarded-* headers.

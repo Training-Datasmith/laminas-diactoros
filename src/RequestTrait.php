@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
+use function array_keys;
+use function is_string;
+use function preg_match;
+
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
-use function array_keys;
-use function is_string;
-use function preg_match;
 use function sprintf;
 use function strtolower;
 

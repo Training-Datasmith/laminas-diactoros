@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Laminas\Diactoros;
 
 use function array_filter;
+
+use const ARRAY_FILTER_USE_KEY;
+
 use function array_key_exists;
 use function is_string;
 use function str_starts_with;
 use function strtolower;
 use function strtr;
-use function substr;
 
-use const ARRAY_FILTER_USE_KEY;
+use function substr;
 
 /**
  * @param array $server Values obtained from the SAPI (generally `$_SERVER`).
@@ -29,7 +31,7 @@ function marshalHeadersFromSapi(array $server): array
             ];
             return isset($contentHeaders[$key]);
         }
-        : static fn(string $key): bool => str_starts_with($key, 'CONTENT_');
+    : static fn (string $key): bool => str_starts_with($key, 'CONTENT_');
 
     $headers = [];
     foreach ($server as $key => $value) {

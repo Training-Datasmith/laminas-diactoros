@@ -4,9 +4,34 @@ declare(strict_types=1);
 
 namespace LaminasTest\Diactoros;
 
+use function assert;
+use function curl_init;
+
 use CurlHandle;
+
+use const DIRECTORY_SEPARATOR;
+
+use function feof;
+use function file_exists;
+use function file_put_contents;
+use function fopen;
+use function fread;
+use function fseek;
+use function fstat;
+use function ftok;
+
+use function function_exists;
+use function fwrite;
+
 use GdImage;
+
+use function imagecreate;
+
 use InvalidArgumentException;
+
+use function is_resource;
+use function is_string;
+
 use Laminas\Diactoros\Exception\InvalidArgumentException as DiactorosInvalidArgumentException;
 use Laminas\Diactoros\Stream;
 use Override;
@@ -17,29 +42,13 @@ use ReflectionProperty;
 use RuntimeException;
 use Shmop;
 
-use function assert;
-use function curl_init;
-use function feof;
-use function file_exists;
-use function file_put_contents;
-use function fopen;
-use function fread;
-use function fseek;
-use function fstat;
-use function ftok;
-use function function_exists;
-use function fwrite;
-use function imagecreate;
-use function is_resource;
-use function is_string;
 use function shmop_open;
 use function stream_get_meta_data;
 use function sys_get_temp_dir;
 use function tempnam;
 use function uniqid;
-use function unlink;
 
-use const DIRECTORY_SEPARATOR;
+use function unlink;
 
 final class StreamTest extends TestCase
 {
@@ -344,7 +353,7 @@ final class StreamTest extends TestCase
 
     public function testIsWritableReturnsTrueForWritableMemoryStream(): void
     {
-        $stream = new Stream("php://temp", "r+b");
+        $stream = new Stream('php://temp', 'r+b');
         $this->assertTrue($stream->isWritable());
     }
 

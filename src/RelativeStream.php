@@ -6,9 +6,10 @@ namespace Laminas\Diactoros;
 
 use Override;
 use Psr\Http\Message\StreamInterface;
-use Stringable;
 
 use const SEEK_SET;
+
+use Stringable;
 
 /**
  * Wrapper for default Stream class, representing subpart (starting from given offset) of initial stream.

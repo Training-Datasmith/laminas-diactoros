@@ -4,26 +4,34 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros;
 
-use Override;
-use Psr\Http\Message\UriInterface;
-use SensitiveParameter;
-use Stringable;
-
 use function array_keys;
 use function assert;
 use function explode;
 use function implode;
+
 use function is_string;
 use function ltrim;
+
+use Override;
+
 use function parse_url;
 use function preg_match;
 use function preg_replace;
 use function preg_replace_callback;
+
+use Psr\Http\Message\UriInterface;
+
 use function rawurlencode;
+
+use SensitiveParameter;
+
 use function sprintf;
 use function str_contains;
 use function str_split;
 use function str_starts_with;
+
+use Stringable;
+
 use function strtolower;
 use function substr;
 

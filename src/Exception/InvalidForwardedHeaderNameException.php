@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\Diactoros\Exception;
 
+use function get_debug_type;
+
+use function is_string;
+
 use Laminas\Diactoros\ServerRequestFilter\FilterUsingXForwardedHeaders;
 
-use function get_debug_type;
-use function is_string;
 use function sprintf;
 
 class InvalidForwardedHeaderNameException extends RuntimeException implements ExceptionInterface
