@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Laminas\Diactoros\Server_Request_Filter;
 
-namespace Laminas\Diactoros\ServerRequestFilter;
-
-use Psr\Http\Message\ServerRequestInterface;
-
+use Psr\Http\Message\Server_Request_Interface;
 /**
  * Filter/initialize a server request.
  *
@@ -19,11 +17,11 @@ use Psr\Http\Message\ServerRequestInterface;
  * This functionality is consumed by the ServerRequestFactory using the request
  * instance it generates, just prior to returning a request.
  */
-interface FilterServerRequestInterface
+interface Filter_Server_Request_Interface
 {
     /**
      * Determine if a request needs further modification, and if so, return a
      * new instance reflecting those modifications.
      */
-    public function __invoke(ServerRequestInterface $request): ServerRequestInterface;
+    public function __invoke(Server_Request_Interface $request): Server_Request_Interface;
 }

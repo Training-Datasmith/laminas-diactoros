@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros\Response;
 
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Stream;
-
 /**
  * A class representing empty HTTP responses.
  */
-class EmptyResponse extends Response
+class Empty_Response extends Response
 {
     /**
      * Create an empty response with the given status code.
@@ -23,13 +21,12 @@ class EmptyResponse extends Response
         $body = new Stream('php://temp', 'r');
         parent::__construct($body, $status, $headers);
     }
-
     /**
      * Create an empty response with the given headers.
      *
      * @param array<non-empty-string, string[]> $headers Headers for the response.
      */
-    public static function withHeaders(array $headers): EmptyResponse
+    public static function with_headers(array $headers): Empty_Response
     {
         return new static(204, $headers);
     }

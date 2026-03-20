@@ -1,15 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
 use Override;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
-
+use Psr\Http\Message\Response_Interface;
+use Psr\Http\Message\Stream_Interface;
 use function sprintf;
-
 /**
  * HTTP response encapsulation.
  *
@@ -17,13 +14,11 @@ use function sprintf;
  * implemented such that they retain the internal state of the current
  * message and return a new instance that contains the changed state.
  */
-class Response implements ResponseInterface
+class Response implements Response_Interface
 {
-    use MessageTrait;
-
+    use Message_Trait;
     public const MIN_STATUS_CODE_VALUE = 100;
     public const MAX_STATUS_CODE_VALUE = 599;
-
     /**
      * Map of standard HTTP status code/reason phrases
      *
@@ -55,7 +50,8 @@ class Response implements ResponseInterface
         303 => 'See Other',
         304 => 'Not Modified',
         305 => 'Use Proxy',
-        306 => 'Switch Proxy', // Deprecated to 306 => '(Unused)'
+        306 => 'Switch Proxy',
+        // Deprecated to 306 => '(Unused)'
         307 => 'Temporary Redirect',
         308 => 'Permanent Redirect',
         // CLIENT ERROR
@@ -104,11 +100,8 @@ class Response implements ResponseInterface
         511 => 'Network Authentication Required',
         599 => 'Network Connect Timeout Error',
     ];
-
-    private string $reasonPhrase;
-
-    private int $statusCode;
-
+    private string $reason_phrase;
+    private int $status_code;
     /**
      * @param string|resource|StreamInterface $body Stream identifier and/or actual stream resource
      * @param int $status Status code for the response, if any.
@@ -117,64 +110,50 @@ class Response implements ResponseInterface
      */
     public function __construct($body = 'php://memory', int $status = 200, array $headers = [])
     {
-        $this->setStatusCode($status);
-        $this->stream = $this->getStream($body, 'wb+');
-        $this->setHeaders($headers);
+        $this->set_status_code($status);
+        $this->stream = $this->get_stream($body, 'wb+');
+        $this->set_headers($headers);
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getStatusCode(): int
+    public function get_status_code(): int
     {
-        return $this->statusCode;
+        return $this->status_code;
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getReasonPhrase(): string
+    public function get_reason_phrase(): string
     {
-        return $this->reasonPhrase;
+        return $this->reason_phrase;
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function withStatus(int $code, string $reasonPhrase = ''): Response
+    public function with_status(int $code, string $reason_phrase = ''): Response
     {
         $new = clone $this;
-        $new->setStatusCode($code, $reasonPhrase);
+        $new->set_status_code($code, $reason_phrase);
         return $new;
     }
-
     /**
      * Set a valid status code.
      *
      * @throws Exception\InvalidArgumentException On an invalid status code.
      */
-    private function setStatusCode(int $code, string $reasonPhrase = ''): void
+    private function set_status_code(int $code, string $reason_phrase = ''): void
     {
-        if (
-            $code < static::MIN_STATUS_CODE_VALUE
-            || $code > static::MAX_STATUS_CODE_VALUE
-        ) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Invalid status code "%s"; must be an integer between %d and %d, inclusive',
-                $code,
-                self::MIN_STATUS_CODE_VALUE,
-                self::MAX_STATUS_CODE_VALUE
-            ));
+        if ($code < static::MIN_STATUS_CODE_VALUE || $code > static::MAX_STATUS_CODE_VALUE) {
+            throw new Exception\InvalidArgumentException(sprintf('Invalid status code "%s"; must be an integer between %d and %d, inclusive', $code, self::MIN_STATUS_CODE_VALUE, self::MAX_STATUS_CODE_VALUE));
         }
-
-        if ($reasonPhrase === '' && isset($this->phrases[$code])) {
-            $reasonPhrase = $this->phrases[$code];
+        if ($reason_phrase === '' && isset($this->phrases[$code])) {
+            $reason_phrase = $this->phrases[$code];
         }
-
-        $this->reasonPhrase = $reasonPhrase;
-        $this->statusCode   = $code;
+        $this->reason_phrase = $reason_phrase;
+        $this->status_code = $code;
     }
 }

@@ -1,61 +1,39 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ServerRequestFactoryInterface;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\UploadedFileFactoryInterface;
-use Psr\Http\Message\UriFactoryInterface;
-
-class ConfigProvider
+use Psr\Http\Message\Request_Factory_Interface;
+use Psr\Http\Message\Response_Factory_Interface;
+use Psr\Http\Message\Server_Request_Factory_Interface;
+use Psr\Http\Message\Stream_Factory_Interface;
+use Psr\Http\Message\Uploaded_File_Factory_Interface;
+use Psr\Http\Message\Uri_Factory_Interface;
+class Config_Provider
 {
-    public const CONFIG_KEY                  = 'laminas-diactoros';
-    public const X_FORWARDED                 = 'x-forwarded-request-filter';
+    public const CONFIG_KEY = 'laminas-diactoros';
+    public const X_FORWARDED = 'x-forwarded-request-filter';
     public const X_FORWARDED_TRUSTED_PROXIES = 'trusted-proxies';
     public const X_FORWARDED_TRUSTED_HEADERS = 'trusted-headers';
-
     /**
      * Retrieve configuration for laminas-diactoros.
      */
     public function __invoke(): array
     {
-        return [
-            'dependencies'   => $this->getDependencies(),
-            self::CONFIG_KEY => $this->getComponentConfig(),
-        ];
+        return ['dependencies' => $this->get_dependencies(), self::CONFIG_KEY => $this->get_component_config()];
     }
-
     /**
      * Returns the container dependencies.
      * Maps factory interfaces to factories.
      */
-    public function getDependencies(): array
+    public function get_dependencies(): array
     {
         // @codingStandardsIgnoreStart
-        return [
-            'invokables' => [
-                RequestFactoryInterface::class => RequestFactory::class,
-                ResponseFactoryInterface::class => ResponseFactory::class,
-                StreamFactoryInterface::class => StreamFactory::class,
-                ServerRequestFactoryInterface::class => ServerRequestFactory::class,
-                UploadedFileFactoryInterface::class => UploadedFileFactory::class,
-                UriFactoryInterface::class => UriFactory::class,
-            ],
-        ];
+        return ['invokables' => [Request_Factory_Interface::class => Request_Factory::class, Response_Factory_Interface::class => Response_Factory::class, Stream_Factory_Interface::class => Stream_Factory::class, Server_Request_Factory_Interface::class => Server_Request_Factory::class, Uploaded_File_Factory_Interface::class => Uploaded_File_Factory::class, Uri_Factory_Interface::class => Uri_Factory::class]];
         // @codingStandardsIgnoreEnd
     }
-
-    public function getComponentConfig(): array
+    public function get_component_config(): array
     {
-        return [
-            self::X_FORWARDED => [
-                self::X_FORWARDED_TRUSTED_PROXIES => '',
-                self::X_FORWARDED_TRUSTED_HEADERS => [],
-            ],
-        ];
+        return [self::X_FORWARDED => [self::X_FORWARDED_TRUSTED_PROXIES => '', self::X_FORWARDED_TRUSTED_HEADERS => []]];
     }
 }

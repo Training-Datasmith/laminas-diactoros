@@ -1,20 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros\Response;
 
 use function get_debug_type;
 use function is_string;
-
 use Laminas\Diactoros\Exception;
 use Laminas\Diactoros\Response;
-
 use Laminas\Diactoros\Stream;
-use Psr\Http\Message\StreamInterface;
-
+use Psr\Http\Message\Stream_Interface;
 use function sprintf;
-
 /**
  * HTML response.
  *
@@ -22,10 +17,9 @@ use function sprintf;
  * by default, sets a status code of 200 and sets the Content-Type header to
  * text/html.
  */
-class HtmlResponse extends Response
+class Html_Response extends Response
 {
-    use InjectContentTypeTrait;
-
+    use Inject_Content_Type_Trait;
     /**
      * Create an HTML response.
      *
@@ -39,34 +33,23 @@ class HtmlResponse extends Response
      */
     public function __construct($html, int $status = 200, array $headers = [])
     {
-        parent::__construct(
-            $this->createBody($html),
-            $status,
-            $this->injectContentType('text/html; charset=utf-8', $headers)
-        );
+        parent::__construct($this->create_body($html), $status, $this->inject_content_type('text/html; charset=utf-8', $headers));
     }
-
     /**
      * Create the message body.
      *
      * @param string|StreamInterface $html
      * @throws Exception\InvalidArgumentException If $html is neither a string or stream.
      */
-    private function createBody($html): StreamInterface
+    private function create_body($html): Stream_Interface
     {
-        if ($html instanceof StreamInterface) {
+        if ($html instanceof Stream_Interface) {
             return $html;
         }
-
         /** @psalm-suppress DocblockTypeContradiction */
-        if (! is_string($html)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Invalid content (%s) provided to %s',
-                get_debug_type($html),
-                self::class
-            ));
+        if (!is_string($html)) {
+            throw new Exception\InvalidArgumentException(sprintf('Invalid content (%s) provided to %s', get_debug_type($html), self::class));
         }
-
         $body = new Stream('php://temp', 'wb+');
         $body->write($html);
         $body->rewind();

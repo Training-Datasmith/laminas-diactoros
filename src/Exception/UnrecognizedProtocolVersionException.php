@@ -1,16 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros\Exception;
 
 use function sprintf;
-
 use UnexpectedValueException;
-
-class UnrecognizedProtocolVersionException extends UnexpectedValueException implements ExceptionInterface
+class Unrecognized_Protocol_Version_Exception extends UnexpectedValueException implements Exception_Interface
 {
-    public static function forVersion(string $version): self
+    public static function for_version(string $version): self
     {
         return new self(sprintf('Unrecognized protocol version (%s)', $version));
     }

@@ -1,22 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
 use Override;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
-
-class ResponseFactory implements ResponseFactoryInterface
+use Psr\Http\Message\Response_Factory_Interface;
+use Psr\Http\Message\Response_Interface;
+class Response_Factory implements Response_Factory_Interface
 {
     /**
      * {@inheritDoc}
      */
     #[Override]
-    public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
+    public function create_response(int $code = 200, string $reason_phrase = ''): Response_Interface
     {
-        return (new Response())
-            ->withStatus($code, $reasonPhrase);
+        return (new Response())->with_status($code, $reason_phrase);
     }
 }

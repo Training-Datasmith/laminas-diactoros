@@ -1,33 +1,24 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
 use Override;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UploadedFileFactoryInterface;
-use Psr\Http\Message\UploadedFileInterface;
-
+use Psr\Http\Message\Stream_Interface;
+use Psr\Http\Message\Uploaded_File_Factory_Interface;
+use Psr\Http\Message\Uploaded_File_Interface;
 use const UPLOAD_ERR_OK;
-
-class UploadedFileFactory implements UploadedFileFactoryInterface
+class Uploaded_File_Factory implements Uploaded_File_Factory_Interface
 {
     /**
      * {@inheritDoc}
      */
     #[Override]
-    public function createUploadedFile(
-        StreamInterface $stream,
-        ?int $size = null,
-        int $error = UPLOAD_ERR_OK,
-        ?string $clientFilename = null,
-        ?string $clientMediaType = null
-    ): UploadedFileInterface {
+    public function create_uploaded_file(Stream_Interface $stream, ?int $size = null, int $error = UPLOAD_ERR_OK, ?string $client_filename = null, ?string $client_media_type = null): Uploaded_File_Interface
+    {
         if ($size === null) {
-            $size = $stream->getSize();
+            $size = $stream->get_size();
         }
-
-        return new UploadedFile($stream, $size, $error, $clientFilename, $clientMediaType);
+        return new Uploaded_File($stream, $size, $error, $client_filename, $client_media_type);
     }
 }

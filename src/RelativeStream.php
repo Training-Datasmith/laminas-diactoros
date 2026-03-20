@@ -1,101 +1,88 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
 use Override;
-use Psr\Http\Message\StreamInterface;
-
+use Psr\Http\Message\Stream_Interface;
 use const SEEK_SET;
-
 use Stringable;
-
 /**
  * Wrapper for default Stream class, representing subpart (starting from given offset) of initial stream.
  * It can be used to avoid copying full stream, conserving memory.
  *
  * @see AbstractSerializer::splitStream()
  */
-final readonly class RelativeStream implements StreamInterface, Stringable
+final readonly class Relative_Stream implements Stream_Interface, Stringable
 {
     private int $offset;
-
-    public function __construct(private StreamInterface $decoratedStream, ?int $offset)
+    public function __construct(private Stream_Interface $decorated_stream, ?int $offset)
     {
         $this->offset = (int) $offset;
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
     public function __toString(): string
     {
-        if ($this->isSeekable()) {
+        if ($this->is_seekable()) {
             $this->seek(0);
         }
-        return $this->getContents();
+        return $this->get_contents();
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
     public function close(): void
     {
-        $this->decoratedStream->close();
+        $this->decorated_stream->close();
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
     public function detach()
     {
-        return $this->decoratedStream->detach();
+        return $this->decorated_stream->detach();
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getSize(): ?int
+    public function get_size(): ?int
     {
-        $size = $this->decoratedStream->getSize();
+        $size = $this->decorated_stream->get_size();
         if ($size === null) {
             return null;
         }
         return $size - $this->offset;
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
     public function tell(): int
     {
-        return $this->decoratedStream->tell() - $this->offset;
+        return $this->decorated_stream->tell() - $this->offset;
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
     public function eof(): bool
     {
-        return $this->decoratedStream->eof();
+        return $this->decorated_stream->eof();
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function isSeekable(): bool
+    public function is_seekable(): bool
     {
-        return $this->decoratedStream->isSeekable();
+        return $this->decorated_stream->is_seekable();
     }
-
     /**
      * {@inheritdoc}
      */
@@ -103,12 +90,11 @@ final readonly class RelativeStream implements StreamInterface, Stringable
     public function seek(int $offset, int $whence = SEEK_SET): void
     {
         if ($whence === SEEK_SET) {
-            $this->decoratedStream->seek($offset + $this->offset, $whence);
+            $this->decorated_stream->seek($offset + $this->offset, $whence);
             return;
         }
-        $this->decoratedStream->seek($offset, $whence);
+        $this->decorated_stream->seek($offset, $whence);
     }
-
     /**
      * {@inheritdoc}
      */
@@ -117,16 +103,14 @@ final readonly class RelativeStream implements StreamInterface, Stringable
     {
         $this->seek(0);
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function isWritable(): bool
+    public function is_writable(): bool
     {
-        return $this->decoratedStream->isWritable();
+        return $this->decorated_stream->is_writable();
     }
-
     /**
      * {@inheritdoc}
      */
@@ -134,20 +118,18 @@ final readonly class RelativeStream implements StreamInterface, Stringable
     public function write(string $string): int
     {
         if ($this->tell() < 0) {
-            throw new Exception\InvalidStreamPointerPositionException();
+            throw new Exception\Invalid_Stream_Pointer_Position_Exception();
         }
-        return $this->decoratedStream->write($string);
+        return $this->decorated_stream->write($string);
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function isReadable(): bool
+    public function is_readable(): bool
     {
-        return $this->decoratedStream->isReadable();
+        return $this->decorated_stream->is_readable();
     }
-
     /**
      * {@inheritdoc}
      */
@@ -155,29 +137,27 @@ final readonly class RelativeStream implements StreamInterface, Stringable
     public function read(int $length): string
     {
         if ($this->tell() < 0) {
-            throw new Exception\InvalidStreamPointerPositionException();
+            throw new Exception\Invalid_Stream_Pointer_Position_Exception();
         }
-        return $this->decoratedStream->read($length);
+        return $this->decorated_stream->read($length);
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getContents(): string
+    public function get_contents(): string
     {
         if ($this->tell() < 0) {
-            throw new Exception\InvalidStreamPointerPositionException();
+            throw new Exception\Invalid_Stream_Pointer_Position_Exception();
         }
-        return $this->decoratedStream->getContents();
+        return $this->decorated_stream->get_contents();
     }
-
     /**
      * {@inheritdoc}
      */
     #[Override]
-    public function getMetadata(?string $key = null)
+    public function get_metadata(?string $key = null)
     {
-        return $this->decoratedStream->getMetadata($key);
+        return $this->decorated_stream->get_metadata($key);
     }
 }

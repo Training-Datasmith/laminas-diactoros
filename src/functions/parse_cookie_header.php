@@ -1,15 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
 use function preg_match_all;
-
 use const PREG_SET_ORDER;
-
 use function rawurldecode;
-
 /**
  * Parse a cookie header according to RFC 6265.
  *
@@ -19,23 +15,20 @@ use function rawurldecode;
  * @param string $cookieHeader A string cookie header value.
  * @return array<non-empty-string, string> key/value cookie pairs.
  */
-function parseCookieHeader($cookieHeader): array
+function parse_cookie_header($cookie_header): array
 {
     preg_match_all('(
-        (?:^\\n?[ \t]*|;[ ])
+        (?:^\n?[ \t]*|;[ ])
         (?P<name>[!#$%&\'*+-.0-9A-Z^_`a-z|~]+)
         =
         (?P<DQUOTE>"?)
             (?P<value>[\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)
         (?P=DQUOTE)
-        (?=\\n?[ \t]*$|;[ ])
-    )x', $cookieHeader, $matches, PREG_SET_ORDER);
-
+        (?=\n?[ \t]*$|;[ ])
+    )x', $cookie_header, $matches, PREG_SET_ORDER);
     $cookies = [];
-
     foreach ($matches as $match) {
         $cookies[$match['name']] = rawurldecode($match['value']);
     }
-
     return $cookies;
 }

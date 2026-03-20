@@ -1,19 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros\Exception;
 
 use UnexpectedValueException;
-
-class SerializationException extends UnexpectedValueException implements ExceptionInterface
+class Serialization_Exception extends UnexpectedValueException implements Exception_Interface
 {
-    public static function forInvalidRequestLine(): self
+    public static function for_invalid_request_line(): self
     {
         return new self('Invalid request line detected');
     }
-
-    public static function forInvalidStatusLine(): self
+    public static function for_invalid_status_line(): self
     {
         return new self('No status line detected');
     }

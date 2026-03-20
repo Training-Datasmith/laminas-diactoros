@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
 use function get_debug_type;
@@ -12,11 +11,10 @@ use function ord;
 use function preg_match;
 use function sprintf;
 use function strlen;
-
 /**
  * Provide security tools around HTTP headers to prevent common injection vectors.
  */
-final class HeaderSecurity
+final class Header_Security
 {
     /**
      * Private constructor; non-instantiable.
@@ -26,7 +24,6 @@ final class HeaderSecurity
     private function __construct()
     {
     }
-
     /**
      * Filter a header value
      *
@@ -47,16 +44,14 @@ final class HeaderSecurity
         $string = '';
         for ($i = 0; $i < $length; $i += 1) {
             $ascii = ord($value[$i]);
-
             // Detect continuation sequences
             if ($ascii === 13) {
                 $lf = ord($value[$i + 1]);
                 $ws = ord($value[$i + 2]);
                 if ($lf === 10 && in_array($ws, [9, 32], true)) {
                     $string .= $value[$i] . $value[$i + 1];
-                    $i      += 1;
+                    $i += 1;
                 }
-
                 continue;
             }
             // Non-visible, non-whitespace characters
@@ -73,13 +68,10 @@ final class HeaderSecurity
             if ($ascii > 254) {
                 continue;
             }
-
             $string .= $value[$i];
         }
-
         return $string;
     }
-
     /**
      * Validate a header value.
      *
@@ -91,10 +83,9 @@ final class HeaderSecurity
      *
      * @param string|int|float $value
      */
-    public static function isValid($value): bool
+    public static function is_valid($value): bool
     {
         $value = (string) $value;
-
         // Look for:
         // \n not preceded by \r, OR
         // \r not followed by \n, OR
@@ -102,7 +93,6 @@ final class HeaderSecurity
         if (preg_match("#(?:(?:(?<!\r)\n)|(?:\r(?!\n))|(?:\r\n(?![ \t])))#", $value)) {
             return false;
         }
-
         // Non-visible, non-whitespace characters
         // 9 === horizontal tab
         // 10 === line feed
@@ -113,32 +103,23 @@ final class HeaderSecurity
         if (preg_match('/[^\x09\x0a\x0d\x20-\x7E\x80-\xFE]/', $value)) {
             return false;
         }
-
         return true;
     }
-
     /**
      * Assert a header value is valid.
      *
      * @param mixed $value Value to be tested. This method asserts it is a string or number.
      * @throws Exception\InvalidArgumentException For invalid values.
      */
-    public static function assertValid(mixed $value): void
+    public static function assert_valid(mixed $value): void
     {
-        if (! is_string($value) && ! is_numeric($value)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Invalid header value type; must be a string or numeric; received %s',
-                get_debug_type($value)
-            ));
+        if (!is_string($value) && !is_numeric($value)) {
+            throw new Exception\InvalidArgumentException(sprintf('Invalid header value type; must be a string or numeric; received %s', get_debug_type($value)));
         }
-        if (! self::isValid($value)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '"%s" is not valid header value',
-                $value
-            ));
+        if (!self::is_valid($value)) {
+            throw new Exception\InvalidArgumentException(sprintf('"%s" is not valid header value', $value));
         }
     }
-
     /**
      * Assert whether or not a header name is valid.
      *
@@ -146,19 +127,13 @@ final class HeaderSecurity
      *
      * @throws Exception\InvalidArgumentException
      */
-    public static function assertValidName(mixed $name): void
+    public static function assert_valid_name(mixed $name): void
     {
-        if (! is_string($name)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Invalid header name type; expected string; received %s',
-                get_debug_type($name)
-            ));
+        if (!is_string($name)) {
+            throw new Exception\InvalidArgumentException(sprintf('Invalid header name type; expected string; received %s', get_debug_type($name)));
         }
-        if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $name)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '"%s" is not valid header name',
-                $name
-            ));
+        if (!preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $name)) {
+            throw new Exception\InvalidArgumentException(sprintf('"%s" is not valid header name', $name));
         }
     }
 }

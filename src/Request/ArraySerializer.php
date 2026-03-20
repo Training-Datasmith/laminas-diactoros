@@ -1,18 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros\Request;
 
 use Laminas\Diactoros\Exception;
 use Laminas\Diactoros\Request;
 use Laminas\Diactoros\Stream;
-use Psr\Http\Message\RequestInterface;
-
+use Psr\Http\Message\Request_Interface;
 use function sprintf;
-
 use Throwable;
-
 /**
  * Serialize or deserialize request messages to/from arrays.
  *
@@ -20,7 +16,7 @@ use Throwable;
  * to an array, as well as the reverse operation of creating a Request instance
  * from an array representing a message.
  */
-final class ArraySerializer
+final class Array_Serializer
 {
     /**
      * Serialize a request message to an array.
@@ -34,46 +30,34 @@ final class ArraySerializer
      *     body: string
      * }
      */
-    public static function toArray(RequestInterface $request): array
+    public static function to_array(Request_Interface $request): array
     {
-        return [
-            'method'           => $request->getMethod(),
-            'request_target'   => $request->getRequestTarget(),
-            'uri'              => (string) $request->getUri(),
-            'protocol_version' => $request->getProtocolVersion(),
-            'headers'          => $request->getHeaders(),
-            'body'             => (string) $request->getBody(),
-        ];
+        return ['method' => $request->get_method(), 'request_target' => $request->get_request_target(), 'uri' => (string) $request->get_uri(), 'protocol_version' => $request->get_protocol_version(), 'headers' => $request->get_headers(), 'body' => (string) $request->get_body()];
     }
-
     /**
      * Deserialize a request array to a request instance.
      *
      * @throws Exception\DeserializationException When the response cannot be deserialized.
      */
-    public static function fromArray(array $serializedRequest): Request
+    public static function from_array(array $serialized_request): Request
     {
         try {
-            $uri    = self::getValueFromKey($serializedRequest, 'uri');
-            $method = self::getValueFromKey($serializedRequest, 'method');
-            $body   = new Stream('php://memory', 'wb+');
-            $body->write(self::getValueFromKey($serializedRequest, 'body'));
-            $headers         = self::getValueFromKey($serializedRequest, 'headers');
-            $requestTarget   = self::getValueFromKey($serializedRequest, 'request_target');
-            $protocolVersion = self::getValueFromKey($serializedRequest, 'protocol_version');
-
-            return (new Request($uri, $method, $body, $headers))
-                ->withRequestTarget($requestTarget)
-                ->withProtocolVersion($protocolVersion);
+            $uri = self::get_value_from_key($serialized_request, 'uri');
+            $method = self::get_value_from_key($serialized_request, 'method');
+            $body = new Stream('php://memory', 'wb+');
+            $body->write(self::get_value_from_key($serialized_request, 'body'));
+            $headers = self::get_value_from_key($serialized_request, 'headers');
+            $request_target = self::get_value_from_key($serialized_request, 'request_target');
+            $protocol_version = self::get_value_from_key($serialized_request, 'protocol_version');
+            return (new Request($uri, $method, $body, $headers))->with_request_target($request_target)->with_protocol_version($protocol_version);
         } catch (Throwable $exception) {
-            throw Exception\DeserializationException::forRequestFromArray($exception);
+            throw Exception\Deserialization_Exception::for_request_from_array($exception);
         }
     }
-
     /**
      * @throws Exception\DeserializationException
      */
-    private static function getValueFromKey(array $data, string $key, ?string $message = null): mixed
+    private static function get_value_from_key(array $data, string $key, ?string $message = null): mixed
     {
         if (isset($data[$key])) {
             return $data[$key];
@@ -81,6 +65,6 @@ final class ArraySerializer
         if ($message === null) {
             $message = sprintf('Missing "%s" key in serialized request', $key);
         }
-        throw new Exception\DeserializationException($message);
+        throw new Exception\Deserialization_Exception($message);
     }
 }

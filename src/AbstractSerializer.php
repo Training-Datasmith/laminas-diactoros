@@ -1,34 +1,28 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Diactoros;
 
 use function array_pop;
-
 use function assert;
 use function implode;
 use function is_string;
 use function preg_match;
-
-use Psr\Http\Message\StreamInterface;
-
+use Psr\Http\Message\Stream_Interface;
 use function sprintf;
 use function str_replace;
 use function trim;
 use function ucwords;
-
 /**
  * Provides base functionality for request and response de/serialization
  * strategies, including functionality for retrieving a line at a time from
  * the message, splitting headers from the body, and serializing headers.
  */
-abstract class AbstractSerializer
+abstract class Abstract_Serializer
 {
-    public const CR  = "\r";
+    public const CR = "\r";
     public const EOL = "\r\n";
-    public const LF  = "\n";
-
+    public const LF = "\n";
     /**
      * Retrieve a single line from the stream.
      *
@@ -38,46 +32,38 @@ abstract class AbstractSerializer
      * @throws Exception\DeserializationException If the sequence contains a CR
      *     or LF in isolation, or ends in a CR.
      */
-    protected static function getLine(StreamInterface $stream): string
+    protected static function get_line(Stream_Interface $stream): string
     {
-        $line    = '';
-        $crFound = false;
-        while (! $stream->eof()) {
+        $line = '';
+        $cr_found = false;
+        while (!$stream->eof()) {
             $char = $stream->read(1);
-
-            if ($crFound && $char === self::LF) {
-                $crFound = false;
+            if ($cr_found && $char === self::LF) {
+                $cr_found = false;
                 break;
             }
-
             // CR NOT followed by LF
-            if ($crFound && $char !== self::LF) {
-                throw Exception\DeserializationException::forUnexpectedCarriageReturn();
+            if ($cr_found && $char !== self::LF) {
+                throw Exception\Deserialization_Exception::for_unexpected_carriage_return();
             }
-
             // LF in isolation
-            if (! $crFound && $char === self::LF) {
-                throw Exception\DeserializationException::forUnexpectedLineFeed();
+            if (!$cr_found && $char === self::LF) {
+                throw Exception\Deserialization_Exception::for_unexpected_line_feed();
             }
-
             // CR found; do not append
             if ($char === self::CR) {
-                $crFound = true;
+                $cr_found = true;
                 continue;
             }
-
             // Any other character: append
             $line .= $char;
         }
-
         // CR found at end of stream
-        if ($crFound) {
-            throw Exception\DeserializationException::forUnexpectedEndOfHeaders();
+        if ($cr_found) {
+            throw Exception\Deserialization_Exception::for_unexpected_end_of_headers();
         }
-
         return $line;
     }
-
     /**
      * Split the stream into headers and body content.
      *
@@ -88,63 +74,55 @@ abstract class AbstractSerializer
      *
      * @throws Exception\DeserializationException For invalid headers.
      */
-    protected static function splitStream(StreamInterface $stream): array
+    protected static function split_stream(Stream_Interface $stream): array
     {
-        $headers       = [];
-        $currentHeader = false;
-
-        while ($line = self::getLine($stream)) {
+        $headers = [];
+        $current_header = false;
+        while ($line = self::get_line($stream)) {
             if (preg_match(';^(?P<name>[!#$%&\'*+.^_`\|~0-9a-zA-Z-]+):(?P<value>.*)$;', $line, $matches)) {
-                $currentHeader = $matches['name'];
-                if (! isset($headers[$currentHeader])) {
-                    $headers[$currentHeader] = [];
+                $current_header = $matches['name'];
+                if (!isset($headers[$current_header])) {
+                    $headers[$current_header] = [];
                 }
-                $headers[$currentHeader][] = trim($matches['value'], "\t ");
+                $headers[$current_header][] = trim($matches['value'], "\t ");
                 continue;
             }
-
-            if ($currentHeader === false) {
-                throw Exception\DeserializationException::forInvalidHeader();
+            if ($current_header === false) {
+                throw Exception\Deserialization_Exception::for_invalid_header();
             }
-
-            if (! preg_match('#^[ \t]#', $line)) {
-                throw Exception\DeserializationException::forInvalidHeaderContinuation();
+            if (!preg_match('#^[ \t]#', $line)) {
+                throw Exception\Deserialization_Exception::for_invalid_header_continuation();
             }
-
             // Append continuation to last header value found
-            $value = array_pop($headers[$currentHeader]);
+            $value = array_pop($headers[$current_header]);
             assert(is_string($value));
-            $headers[$currentHeader][] = $value . ' ' . trim($line, "\t ");
+            $headers[$current_header][] = $value . ' ' . trim($line, "\t ");
         }
-
         // use RelativeStream to avoid copying initial stream into memory
-        return [$headers, new RelativeStream($stream, $stream->tell())];
+        return [$headers, new Relative_Stream($stream, $stream->tell())];
     }
-
     /**
      * Serialize headers to string values.
      *
      * @psalm-param array<non-empty-string, string[]> $headers
      */
-    protected static function serializeHeaders(array $headers): string
+    protected static function serialize_headers(array $headers): string
     {
         $lines = [];
         foreach ($headers as $header => $values) {
-            $normalized = self::filterHeader($header);
+            $normalized = self::filter_header($header);
             foreach ($values as $value) {
                 $lines[] = sprintf('%s: %s', $normalized, $value);
             }
         }
-
         return implode("\r\n", $lines);
     }
-
     /**
      * Filter a header name to wordcase
      *
      * @param string $header
      */
-    protected static function filterHeader($header): string
+    protected static function filter_header($header): string
     {
         $filtered = str_replace('-', ' ', $header);
         $filtered = ucwords($filtered);
