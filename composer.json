@@ -70,7 +70,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LaminasTest\\Diactoros\\": "test/"
+            "Laminas_Test\\Diactoros\\": "test/"
         }
     },
     "conflict": {
